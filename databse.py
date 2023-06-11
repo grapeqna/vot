@@ -14,10 +14,8 @@ conn.execute('''
 ''')
 conn.commit()
 
-# Create Elasticsearch client instance
 es = Elasticsearch(['localhost:9200'])
 
-# Function to add a book to the database
 def add_book(title, author, genre, comment):
     conn.execute('''
         INSERT INTO books (title, author, genre, comment)
@@ -25,7 +23,6 @@ def add_book(title, author, genre, comment):
     ''', (title, author, genre, comment))
     conn.commit()
 
-    # Index the book data in Elasticsearch
     es.index(index='books', body={
         'title': title,
         'author': author,
@@ -33,13 +30,11 @@ def add_book(title, author, genre, comment):
         'comment': comment
     })
 
-# Function to retrieve all books from the database
 def get_all_books():
     cursor = conn.execute('SELECT * FROM books')
     books = cursor.fetchall()
     return books
 
-# Function to search books in Elasticsearch
 def search_books(query):
     es_results = es.search(index='books', body={
         'query': {
@@ -53,6 +48,3 @@ def search_books(query):
     hits = es_results['hits']['hits']
     books = [hit['_source'] for hit in hits]
     return books
-
-# You can close the connection at an appropriate time in your application
-# conn.close()
