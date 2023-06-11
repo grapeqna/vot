@@ -17,45 +17,99 @@
             font-weight: bold;
         }
 
-        input[type="text"],
-        textarea {
-            width: 300px;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            margin-bottom: 10px;
+        .inputGroup {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 1em 0 1em 0;
+            max-width: 190px;
+            position: relative;
         }
 
-        input[type="submit"],
+        .inputGroup input {
+            font-size: 100%;
+            padding: 0.8em;
+            outline: none;
+            border: 2px solid rgb(200, 200, 200);
+            background-color: transparent;
+            border-radius: 20px;
+            width: 100%;
+        }
+
+        .inputGroup label {
+            font-size: 100%;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            padding: 0.8em;
+            margin-left: 0.5em;
+            transform: translateY(-50%);
+            pointer-events: none;
+            transition: all 0.3s ease;
+            color: rgb(100, 100, 100);
+        }
+
+        .inputGroup input:focus ~ label,
+        .inputGroup input:valid ~ label {
+            transform: translateY(-100%) scale(.9);
+            margin: 0em;
+            margin-left: 1.3em;
+            padding: 0.4em;
+            background-color: #e8e8e8;
+        }
+
+        .inputGroup input:focus,
+        .inputGroup input:valid {
+            border-color: rgb(150, 150, 200);
+        }
+
         .button {
-            padding: 8px 15px;
-            background-color: #4CAF50;
+            --bg: #000;
+            --hover-bg: #ff90e8;
+            --hover-text: #000;
             color: #fff;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            display: inline-block;
-        }
-
-        .button {
+            border: 1px solid var(--bg);
+            border-radius: 4px;
+            padding: 0.8em 2em;
+            width: 200px; /* Added fixed width */
+            background: var(--bg);
+            transition: 0.2s;
             text-decoration: none;
             margin-top: 10px;
             margin-left: 10px;
+        }
+
+        .button:hover {
+            color: var(--hover-text);
+            transform: translate(-0.25rem,-0.25rem);
+            background: var(--hover-bg);
+            box-shadow: 0.25rem 0.25rem var(--bg);
+        }
+
+        .button:active {
+            transform: translate(0);
+            box-shadow: none;
         }
     </style>
 </head>
 <body>
     <h1>Book Diary - Add Book</h1>
     <form method="post" action="/">
-        <label>Title:</label><br>
-        <input type="text" name="title" required><br><br>
-        <label>Author:</label><br>
-        <input type="text" name="author" required><br><br>
-        <label>Genre:</label><br>
-        <input type="text" name="genre" required><br><br>
-        <label>Comment:</label><br>
-        <textarea name="comment" rows="4" cols="50"></textarea><br><br>
-        <input type="submit" value="Add Book">
+        <div class="inputGroup">
+            <input type="text" name="title" id="title" required>
+            <label for="title">Title:</label>
+        </div>
+        <div class="inputGroup">
+            <input type="text" name="author" id="author" required>
+            <label for="author">Author:</label>
+        </div>
+        <div class="inputGroup">
+            <input type="text" name="genre" id="genre" required>
+            <label for="genre">Genre:</label>
+        </div>
+        <div class="inputGroup">
+            <textarea name="comment" id="comment" rows="4" cols="50"></textarea>
+            <label for="comment">Comment:</label>
+        </div>
+        <input type="submit" value="Add Book" class="button">
         <a href="/read_books" class="button">See Read Books</a>
     </form>
 </body>

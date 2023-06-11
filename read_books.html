@@ -26,7 +26,8 @@
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #ff90e8; /* Pink color from the button */
+            color: #fff; /* Text color */
         }
 
         form {
@@ -40,22 +41,37 @@
             border-radius: 3px;
         }
 
-        button[type="submit"] {
-            padding: 8px 15px;
-            background-color: #4CAF50;
+        .button {
+            --bg: #000;
+            --hover-bg: #ff90e8;
+            --hover-text: #000;
             color: #fff;
-            border: none;
-            border-radius: 3px;
+            border: 1px solid var(--bg);
+            border-radius: 4px;
+            padding: 0.8em 2em;
+            background: var(--bg);
+            transition: 0.2s;
             cursor: pointer;
         }
 
+        .button:hover {
+            color: var(--hover-text);
+            transform: translate(-0.25rem,-0.25rem);
+            background: var(--hover-bg);
+            box-shadow: 0.25rem 0.25rem var(--bg);
+        }
+
+        .button:active {
+            transform: translate(0);
+            box-shadow: none;
+        }
     </style>
 </head>
 <body>
     <h1>Read Books</h1>
     <form action="{{ url_for('read_books') }}" method="GET">
         <input type="text" name="search_query" placeholder="Search by title or genre" value="{{ search_query }}">
-        <button type="submit">Search</button>
+        <button type="submit" class="button">Search</button>
     </form>
     <table>
         <thead>

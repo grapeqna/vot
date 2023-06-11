@@ -1,15 +1,19 @@
-import sqlite3
+import pyodbc
 from elasticsearch import Elasticsearch
 
-conn = sqlite3.connect('book_diary.db')
+# Update the connection details for Azure SQL Database
+CONNECTION_STRING = 'Driver={ODBC Driver 18 for SQL Server};Server=tcp:vot-books.database.windows.net,1433;Database=books;Uid=yana;Pwd={your_password_here};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;'
+
+# Create a connection to Azure SQL Database
+conn = pyodbc.connect(CONNECTION_STRING)
 
 conn.execute('''
     CREATE TABLE IF NOT EXISTS books (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        author TEXT NOT NULL,
-        genre TEXT NOT NULL,
-        comment TEXT
+        id INT IDENTITY(1,1) PRIMARY KEY,
+        title NVARCHAR(255) NOT NULL,
+        author NVARCHAR(255) NOT NULL,
+        genre NVARCHAR(255) NOT NULL,
+        comment NVARCHAR(MAX)
     )
 ''')
 conn.commit()
